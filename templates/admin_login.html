@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Login Administrativo - Convite de Noivado{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2 style="color: #7d8766; margin-bottom: 20px; text-align: center;">
+        <i class="fas fa-lock"></i> Área Administrativa
+    </h2>
+    
+    <form method="POST" style="max-width: 400px; margin: 0 auto;">
+        <div class="form-group">
+            <label for="senha">
+                <i class="fas fa-key"></i> Senha de Acesso
+            </label>
+            <input type="password" id="senha" name="senha" class="form-control" required>
+        </div>
+
+        <div style="text-align: center; margin: 30px 0;">
+            <button type="submit" class="btn btn-success">
+                <i class="fas fa-sign-in-alt"></i> Entrar
+            </button>
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Voltar
+            </a>
+        </div>
+    </form>
+</div>
+
+<div class="card">
+    <h3 style="color: #7d8766; margin-bottom: 15px;">
+        <i class="fas fa-info-circle"></i> Informações
+    </h3>
+    <ul style="list-style: none; padding: 0;">
+        <li style="margin-bottom: 10px; padding: 10px; background: #f8f9fa; border-radius: 5px;">
+            <i class="fas fa-check" style="color: #28a745; margin-right: 10px;"></i>
+            Acesso restrito aos organizadores do evento
+        </li>
+        <li style="margin-bottom: 10px; padding: 10px; background: #f8f9fa; border-radius: 5px;">
+            <i class="fas fa-check" style="color: #28a745; margin-right: 10px;"></i>
+            Visualize todas as confirmações de presença
+        </li>
+        <li style="margin-bottom: 10px; padding: 10px; background: #f8f9fa; border-radius: 5px;">
+            <i class="fas fa-check" style="color: #28a745; margin-right: 10px;"></i>
+            Exporte a lista de convidados
+        </li>
+    </ul>
+</div>
+{% endblock %}

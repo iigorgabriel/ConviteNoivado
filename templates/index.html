@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block title %}Início - Convite de Noivado{% endblock %}
+
+{% block content %}
+<div class="card">
+    {% if config %}
+        <div style="text-align: center; margin-bottom: 30px;">
+            <h2 style="color: #7d8766; margin-bottom: 15px;">
+                <i class="fas fa-ring"></i> {{ config.nome_noivos }}
+            </h2>
+            <p style="font-size: 1.1rem; color: #666; margin-bottom: 10px;">
+                <i class="fas fa-calendar-alt"></i> 
+                {{ config.data_evento }} às {{ config.hora_evento }}
+            </p>
+            <p style="font-size: 1.1rem; color: #666; margin-bottom: 20px;">
+                <i class="fas fa-map-marker-alt"></i> {{ config.local_evento }}
+            </p>
+            {% if config.descricao_evento %}
+                <p style="color: #777; font-style: italic;">{{ config.descricao_evento }}</p>
+            {% endif %}
+        </div>
+    {% else %}
+        <div style="text-align: center; margin-bottom: 30px;">
+            <h2 style="color: #7d8766;">
+                <i class="fas fa-heart"></i> Bem-vindo ao nosso noivado!
+            </h2>
+            <p style="color: #666;">Configure as informações do evento para começar.</p>
+        </div>
+    {% endif %}
+
+    <div class="card logo-container">
+        <div class="logo-placeholder" style="text-align: center;">
+            <img src="{{ url_for('static', filename='images/logo-noivado.png') }}" alt="Logo Igor & Júlia" style="max-width: 100%; height: auto; max-height: 200px;">
+        </div>
+    </div>
+
+    <div class="card">
+        <h3 style="color: #7d8766; margin-bottom: 20px; text-align: center;">
+            <i class="fas fa-user-plus"></i> Confirmar Presença
+        </h3>
+        
+        <form method="POST" action="{{ url_for('confirmar') }}" style="max-width: 600px; margin: 0 auto;">
+            <div id="convidados-container">
+                <div class="form-group">
+                    <label for="nome1">
+                        <i class="fas fa-user"></i> Nome Completo *
+                    </label>
+                    <input type="text" id="nome1" name="nome1" class="form-control" required>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin: 30px 0;">
+                <button type="button" id="adicionar-convidado" onclick="adicionarConvidado()" style="background: linear-gradient(135deg, #8a9575, #9ba686); color: white; border: none; padding: 10px 20px; border-radius: 25px; margin: 5px; transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 10px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 5px rgba(0,0,0,0.1)'">
+                    <i class="fas fa-plus"></i> Adicionar Nome
+                </button>
+                <button type="submit" style="background: linear-gradient(135deg, #7d8766, #8a9575); color: white; border: none; padding: 10px 20px; border-radius: 25px; margin: 5px; transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 10px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 5px rgba(0,0,0,0.1)'">
+                    <i class="fas fa-check"></i> Confirmar Presença
+                </button>
+            </div>
+        </form>
+
+        <script>
+            let convidadosCount = 1;
+            const maxConvidados = 3;
+
+            function adicionarConvidado() {
+                if (convidadosCount < maxConvidados) {
+                    convidadosCount++;
+                    const container = document.getElementById('convidados-container');
+                    
+                    const novoConvidado = document.createElement('div');
+                    novoConvidado.className = 'form-group';
+                    novoConvidado.innerHTML = `
+                        <label for="nome${convidadosCount}">
+                            <i class="fas fa-user"></i> Nome ${convidadosCount}
+                        </label>
+                        <div style="display: flex; gap: 10px; align-items: center;">
+                            <input type="text" id="nome${convidadosCount}" name="nome${convidadosCount}" class="form-control">
+                            <button type="button" style="background: linear-gradient(135deg, #dc3545, #e74c3c); color: white; border: none; padding: 8px 12px; font-size: 0.9rem; border-radius: 15px; transition: all 0.3s ease;" onclick="removerConvidado(this)" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform='translateY(0)'">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    `;
+                    
+                    container.appendChild(novoConvidado);
+                    
+                    if (convidadosCount >= maxConvidados) {
+                        document.getElementById('adicionar-convidado').style.display = 'none';
+                    }
+                }
+            }
+
+            function removerConvidado(button) {
+                const formGroup = button.closest('.form-group');
+                formGroup.remove();
+                convidadosCount--;
+                
+                // Reorganizar os IDs dos campos restantes
+                const campos = document.querySelectorAll('#convidados-container .form-group input');
+                campos.forEach((campo, index) => {
+                    const novoId = index + 1;
+                    campo.id = `nome${novoId}`;
+                    campo.name = `nome${novoId}`;
+                    campo.previousElementSibling.querySelector('label').textContent = `Nome ${novoId}`;
+                });
+                
+                // Mostrar o botão de adicionar novamente se necessário
+                if (convidadosCount < maxConvidados) {
+                    document.getElementById('adicionar-convidado').style.display = 'inline-block';
+                }
+            }
+        </script>
+    </div>
+
+    <div class="nav">
+        <a href="{{ url_for('admin') }}" style="background: linear-gradient(135deg, #6b7a5a, #7d8766); color: white; border: none; padding: 10px 20px; border-radius: 25px; text-decoration: none; display: inline-block; transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 10px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 5px rgba(0,0,0,0.1)'">
+            <i class="fas fa-cog"></i> Área Administrativa
+        </a>
+    </div>
+</div>
+
+<div class="card">
+    <h3 style="color: #7d8766; margin-bottom: 20px;">
+        <i class="fas fa-info-circle"></i> Como Funciona
+    </h3>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+        <div style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+            <i class="fas fa-check-circle" style="font-size: 2rem; color: #7d8766; margin-bottom: 10px;"></i>
+            <h4>1. Confirmar</h4>
+            <p>Preencha seus dados e confirme presença</p>
+        </div>
+        <div style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+            <i class="fas fa-map-marker-alt" style="font-size: 2rem; color: #7d8766; margin-bottom: 10px;"></i>
+            <h4>2. Endereço abaixo:</h4>
+            <p><strong>Av. Ayrton Senna, 3391<br>Condomínio Vita Praia</strong></p>
+            <div style="margin-top: 15px;">
+                <a href="https://waze.com/ul?q=Av.%20Ayrton%20Senna,%203391,%20Condomínio%20Vita%20Praia" target="_blank" style="margin: 5px; padding: 10px 20px; font-size: 0.95rem; border-radius: 25px; text-decoration: none; display: inline-block; transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.1); background: linear-gradient(135deg, #7d8766, #8a9575); color: white; border: none;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 10px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 5px rgba(0,0,0,0.1)'">
+                    <i class="fas fa-compass"></i> Waze
+                </a>
+                <a href="https://maps.google.com/?q=Av.+Ayrton+Senna,+3391,+Condomínio+Vita+Praia" target="_blank" style="margin: 5px; padding: 10px 20px; font-size: 0.95rem; border-radius: 25px; text-decoration: none; display: inline-block; transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.1); background: linear-gradient(135deg, #6b7a5a, #7d8766); color: white; border: none;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 10px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 5px rgba(0,0,0,0.1)'">
+                    <i class="fas fa-map"></i> Google Maps
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

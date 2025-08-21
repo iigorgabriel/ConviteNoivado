@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block title %}Administração - Convite de Noivado{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2 style="color: #7d8766; margin-bottom: 20px;">
+        <i class="fas fa-cog"></i> Área Administrativa
+    </h2>
+
+    <div class="nav">
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">
+            <i class="fas fa-home"></i> Página Inicial
+        </a>
+        <a href="{{ url_for('logout') }}" class="btn btn-danger">
+            <i class="fas fa-sign-out-alt"></i> Sair
+        </a>
+    </div>
+</div>
+
+<div class="card">
+    <h3 style="color: #7d8766; margin-bottom: 20px;">
+        <i class="fas fa-users"></i> Lista de Convidados Confirmados
+    </h3>
+
+    {% if convidados %}
+        <div style="overflow-x: auto;">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nomes</th>
+                        <th>Total de Pessoas</th>
+                        <th>Data de Confirmação</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for convidado in convidados %}
+                        <tr>
+                            <td>
+                                <strong>{{ convidado.id }}</strong>
+                            </td>
+                            <td>
+                                {% for nome in convidado.nomes %}
+                                    <div style="margin-bottom: 8px; padding: 3px 0; border-bottom: 1px solid #eee;">
+                                        <i class="fas fa-user" style="color: #7d8766; margin-right: 8px;"></i> {{ nome }}
+                                    </div>
+                                {% endfor %}
+                            </td>
+                            <td>
+                                <span class="badge badge-success">{{ convidado.total_pessoas }}</span>
+                            </td>
+                            <td>
+                                <small>{{ convidado.data_confirmacao.split(' ')[0] if convidado.data_confirmacao else '-' }}</small>
+                            </td>
+                            <td>
+                                <div style="display: flex; gap: 5px;">
+                                    <a href="{{ url_for('editar_convidado', convidado_id=convidado.id) }}" 
+                                       class="btn btn-secondary" 
+                                       style="padding: 5px 10px; font-size: 0.8rem;">
+                                        <i class="fas fa-edit"></i> Editar
+                                    </a>
+                                    <a href="{{ url_for('deletar_convidado', convidado_id=convidado.id) }}" 
+                                       class="btn btn-danger" 
+                                       style="padding: 5px 10px; font-size: 0.8rem;"
+                                       onclick="return confirm('Tem certeza que deseja remover este convidado?')">
+                                        <i class="fas fa-trash"></i> Deletar
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div style="margin-top: 20px; text-align: center;">
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                <h4 style="color: #7d8766;">Resumo</h4>
+                <p><strong>Total de Convidados:</strong> {{ total_convidados }}</p>
+                <p><strong>Total de Pessoas:</strong> {{ total_pessoas }}</p>
+            </div>
+            
+            <button onclick="exportarCSV()" class="btn btn-success">
+                <i class="fas fa-download"></i> Exportar CSV
+            </button>
+            <button onclick="atualizarEstatisticas()" class="btn btn-secondary">
+                <i class="fas fa-sync"></i> Atualizar
+            </button>
+        </div>
+
+        
+    {% else %}
+        <div style="text-align: center; padding: 40px; color: #666;">
+            <i class="fas fa-users" style="font-size: 3rem; margin-bottom: 20px; opacity: 0.5;"></i>
+            <h4>Nenhum convidado registrado ainda</h4>
+            <p>As confirmações aparecerão aqui quando os convidados começarem a confirmar presença.</p>
+        </div>
+    {% endif %}
+</div>
+
+<script>
+function exportarCSV() {
+    fetch('/api/convidados')
+        .then(response => response.json())
+        .then(data => {
+            let csv = 'ID,Nomes,Total de Pessoas,Data de Confirmação\n';
+            
+            data.forEach(convidado => {
+                const id = convidado.id;
+                const nomes = `"${convidado.nomes.join(', ')}"`;
+                const totalPessoas = convidado.total_pessoas;
+                const data = convidado.data_confirmacao ? convidado.data_confirmacao.split(' ')[0] : '';
+                
+                csv += `${id},${nomes},${totalPessoas},${data}\n`;
+            });
+            
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', 'convidados_noivado.csv');
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+}
+
+function atualizarEstatisticas() {
+    location.reload();
+}
+</script>
+{% endblock %} 

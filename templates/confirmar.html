@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}Confirmar Presença - Convite de Noivado{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2 style="color: #7d8766; margin-bottom: 20px; text-align: center;">
+        <i class="fas fa-check-circle"></i> Confirmar Presença
+    </h2>
+    
+    <form method="POST" style="max-width: 600px; margin: 0 auto;">
+        <div class="form-group">
+            <label for="nome">
+                <i class="fas fa-user"></i> Nome Completo *
+            </label>
+            <input type="text" id="nome" name="nome" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label for="email">
+                <i class="fas fa-envelope"></i> E-mail
+            </label>
+            <input type="email" id="email" name="email" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="telefone">
+                <i class="fas fa-phone"></i> Telefone
+            </label>
+            <input type="tel" id="telefone" name="telefone" class="form-control" placeholder="(11) 99999-9999">
+        </div>
+
+        <div class="form-group">
+            <label for="numero_acompanhantes">
+                <i class="fas fa-users"></i> Número de Acompanhantes
+            </label>
+            <input type="number" id="numero_acompanhantes" name="numero_acompanhantes" class="form-control" min="0" max="10" value="0">
+        </div>
+
+        <div class="form-group">
+            <label for="observacoes">
+                <i class="fas fa-comment"></i> Observações
+            </label>
+            <textarea id="observacoes" name="observacoes" class="form-control" rows="3" placeholder="Alguma observação especial? (opcional)"></textarea>
+        </div>
+
+        <div class="form-group" style="text-align: center; margin: 30px 0;">
+            <label style="display: inline-flex; align-items: center; cursor: pointer; font-size: 1.1rem;">
+                <input type="checkbox" name="confirmado" style="margin-right: 10px; transform: scale(1.2);" checked>
+                <i class="fas fa-heart" style="color: #7d8766; margin-left: 5px;"></i>
+                Confirmo minha presença no evento
+            </label>
+        </div>
+
+        <div style="text-align: center;">
+            <button type="submit" class="btn btn-success">
+                <i class="fas fa-paper-plane"></i> Enviar Confirmação
+            </button>
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Voltar
+            </a>
+        </div>
+    </form>
+</div>
+
+<div class="card">
+    <h3 style="color: #7d8766; margin-bottom: 15px;">
+        <i class="fas fa-info-circle"></i> Informações Importantes
+    </h3>
+    <ul style="list-style: none; padding: 0;">
+        <li style="margin-bottom: 10px; padding: 10px; background: #f8f9fa; border-radius: 5px;">
+            <i class="fas fa-check" style="color: #28a745; margin-right: 10px;"></i>
+            Sua confirmação será registrada imediatamente
+        </li>
+        <li style="margin-bottom: 10px; padding: 10px; background: #f8f9fa; border-radius: 5px;">
+            <i class="fas fa-check" style="color: #28a745; margin-right: 10px;"></i>
+            Você pode incluir acompanhantes se necessário
+        </li>
+        <li style="margin-bottom: 10px; padding: 10px; background: #f8f9fa; border-radius: 5px;">
+            <i class="fas fa-check" style="color: #28a745; margin-right: 10px;"></i>
+            Os dados são mantidos em segurança
+        </li>
+        <li style="margin-bottom: 10px; padding: 10px; background: #f8f9fa; border-radius: 5px;">
+            <i class="fas fa-check" style="color: #28a745; margin-right: 10px;"></i>
+            Em caso de dúvidas, entre em contato conosco
+        </li>
+    </ul>
+</div>
+{% endblock %} 
