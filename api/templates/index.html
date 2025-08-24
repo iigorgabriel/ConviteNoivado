@@ -18,13 +18,60 @@
         <p style="color: #666;">Igor & Júlia</p>
     </div>
 
-    <div class="card logo-container">
-        <div class="logo-placeholder" style="text-align: center;">
-            <img src="{{ url_for('static', filename='images/logo-noivado.png') }}" alt="Logo Igor & Júlia" style="max-width: 100%; height: auto; max-height: 200px;">
+    <!-- Seção Como Funciona no lugar da logo -->
+    <div class="card">
+        <h3 style="color: #7d8766; margin-bottom: 20px; text-align: center;">
+            <i class="fas fa-info-circle"></i> Como Funciona
+        </h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+            <div style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+                <i class="fas fa-check-circle" style="font-size: 2rem; color: #7d8766; margin-bottom: 10px;"></i>
+                <h4>1. Confirmar</h4>
+                <p>Preencha seus dados e confirme presença</p>
+                <div style="margin-top: 15px;">
+                    <a href="#formulario-confirmacao" style="margin: 5px; padding: 10px 20px; font-size: 0.95rem; border-radius: 25px; text-decoration: none; display: inline-block; transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.1); background: linear-gradient(135deg, #7d8766, #8a9575); color: white; border: none;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 10px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 5px rgba(0,0,0,0.1)'">
+                        <i class="fas fa-check"></i> Confirmar
+                    </a>
+                </div>
+            </div>
+            <div style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+                <i class="fas fa-gift" style="font-size: 2rem; color: #7d8766; margin-bottom: 10px;"></i>
+                <h4>2. Lista de Presentes</h4>
+                <p>Confira nossa lista de presentes</p>
+                <div style="margin-top: 15px;">
+                    <a href="https://lista.camicado.com.br/igoremariajulia" target="_blank" style="margin: 5px; padding: 10px 20px; font-size: 0.95rem; border-radius: 25px; text-decoration: none; display: inline-block; transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.1); background: linear-gradient(135deg, #7d8766, #8a9575); color: white; border: none;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 10px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 5px rgba(0,0,0,0.1)'">
+                        <i class="fas fa-gift"></i> Ver Lista de Presentes
+                    </a>
+                </div>
+            </div>
+            <div style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+                <i class="fas fa-map-marker-alt" style="font-size: 2rem; color: #7d8766; margin-bottom: 10px;"></i>
+                <h4>3. Endereço abaixo:</h4>
+                <p>Av. Ayrton Senna, 3391<br>Condomínio Vita Praia</p>
+                <div style="margin-top: 15px;">
+                    <a href="https://waze.com/ul?q=Av.%20Ayrton%20Senna,%203391,%20Condomínio%20Vita%20Praia" target="_blank" style="margin: 5px; padding: 10px 20px; font-size: 0.95rem; border-radius: 25px; text-decoration: none; display: inline-block; transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.1); background: linear-gradient(135deg, #7d8766, #8a9575); color: white; border: none;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 10px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 5px rgba(0,0,0,0.1)'">
+                        <i class="fas fa-compass"></i> Waze
+                    </a>
+                    <a href="https://maps.google.com/?q=Av.+Ayrton+Senna,+3391,+Condomínio+Vita+Praia" target="_blank" style="margin: 5px; padding: 10px 20px; font-size: 0.95rem; border-radius: 25px; text-decoration: none; display: inline-block; transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.1); background: linear-gradient(135deg, #6b7a5a, #7d8766); color: white; border: none;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 10px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 5px rgba(0,0,0,0.1)'">
+                        <i class="fas fa-map"></i> Google Maps
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="card">
+    <!-- Logo desceu para onde estava o Como Funciona -->
+    <div class="card logo-container">
+        <div class="logo-placeholder" style="text-align: center;">
+            <img src="{{ url_for('static', filename='images/logo-noivado.png') }}" alt="Logo Igor & Júlia" style="max-width: 100%; height: auto; max-height: 300px;">
+            <p style="margin-top: 20px; font-style: italic; color: #555; max-width: 80%; margin-left: auto; margin-right: auto; line-height: 1.6;">
+                "Cantarei para sempre as misericórdias do Senhor; com a minha boca farei conhecida a tua fidelidade por todas as gerações.<br>Salmos 89:1"
+            </p>
+        </div>
+    </div>
+
+    <!-- Formulário de confirmação com ID para âncora -->
+    <div class="card" id="formulario-confirmacao">
         <h3 style="color: #7d8766; margin-bottom: 20px; text-align: center;">
             <i class="fas fa-user-plus"></i> Confirmar Presença
         </h3>
@@ -100,32 +147,6 @@
                 }
             }
         </script>
-    </div>
-</div>
-
-<div class="card">
-    <h3 style="color: #7d8766; margin-bottom: 20px;">
-        <i class="fas fa-info-circle"></i> Como Funciona
-    </h3>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
-        <div style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 10px;">
-            <i class="fas fa-check-circle" style="font-size: 2rem; color: #7d8766; margin-bottom: 10px;"></i>
-            <h4>1. Confirmar</h4>
-            <p>Preencha seus dados e confirme presença</p>
-        </div>
-        <div style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 10px;">
-            <i class="fas fa-map-marker-alt" style="font-size: 2rem; color: #7d8766; margin-bottom: 10px;"></i>
-            <h4>2. Endereço abaixo:</h4>
-            <p><strong>Av. Ayrton Senna, 3391<br>Condomínio Vita Praia</strong></p>
-            <div style="margin-top: 15px;">
-                <a href="https://waze.com/ul?q=Av.%20Ayrton%20Senna,%203391,%20Condomínio%20Vita%20Praia" target="_blank" style="margin: 5px; padding: 10px 20px; font-size: 0.95rem; border-radius: 25px; text-decoration: none; display: inline-block; transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.1); background: linear-gradient(135deg, #7d8766, #8a9575); color: white; border: none;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 10px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 5px rgba(0,0,0,0.1)'">
-                    <i class="fas fa-compass"></i> Waze
-                </a>
-                <a href="https://maps.google.com/?q=Av.+Ayrton+Senna,+3391,+Condomínio+Vita+Praia" target="_blank" style="margin: 5px; padding: 10px 20px; font-size: 0.95rem; border-radius: 25px; text-decoration: none; display: inline-block; transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.1); background: linear-gradient(135deg, #6b7a5a, #7d8766); color: white; border: none;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 10px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 5px rgba(0,0,0,0.1)'">
-                    <i class="fas fa-map"></i> Google Maps
-                </a>
-            </div>
-        </div>
     </div>
 </div>
 {% endblock %} 
