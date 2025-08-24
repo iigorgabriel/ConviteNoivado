@@ -23,6 +23,11 @@ def index():
 @app.route('/confirmar', methods=['POST'])
 def confirmar():
     try:
+        # Verificar se as variáveis de ambiente estão configuradas
+        if not os.getenv('SUPABASE_URL') or not os.getenv('SUPABASE_KEY'):
+            flash('Erro de configuração: Variáveis do Supabase não encontradas', 'error')
+            return redirect(url_for('index'))
+        
         # Coletar nomes do formulário
         nomes = []
         i = 1
@@ -49,7 +54,9 @@ def confirmar():
         return redirect(url_for('index'))
         
     except Exception as e:
-        flash(f'Erro ao confirmar presença: {str(e)}', 'error')
+        error_msg = f'Erro ao confirmar presença: {str(e)}'
+        print(f"DEBUG: {error_msg}")  # Log para debug
+        flash(error_msg, 'error')
         return redirect(url_for('index'))
 
 @app.route('/admin', methods=['GET', 'POST'])
