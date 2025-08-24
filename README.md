@@ -1,147 +1,155 @@
-# Sistema de Convite de Noivado
+# Convite de Noivado - Igor & Júlia
 
-Um sistema completo para gerenciar confirmações de presença em um noivado, desenvolvido com Python Flask e SQLite3.
+Sistema de confirmação de presença para noivado desenvolvido com Flask e Supabase.
 
 ## 🚀 Funcionalidades
 
-- **Página Principal**: Exibe informações do evento e formulário de confirmação
-- **Confirmação Simplificada**: Formulário com até 3 nomes por confirmação
-- **Área Administrativa Protegida**: Acesso com senha para gerenciamento
-- **Armazenamento JSON**: Dados salvos em arquivo JSON para facilidade
-- **Configuração do Evento**: Definição de data, local e informações dos noivos
-- **Exportação de Dados**: Exportação da lista de convidados em CSV
-- **Design Responsivo**: Interface moderna com cor personalizada (#7d8766)
-- **Sistema de Login**: Proteção por senha na área administrativa
-- **Visualização de Confirmações**: Lista completa de convidados confirmados
-- **Edição de Convidados**: Modificar nomes e informações dos convidados
-- **Exclusão de Convidados**: Remover convidados da lista
+- **Página Principal**: Formulário para confirmar presença com até 3 nomes
+- **Área Administrativa**: Protegida por senha para gerenciar convidados
+- **Banco de Dados**: Supabase (PostgreSQL) para armazenamento robusto
+- **Deploy**: Otimizado para Vercel
+- **Design Responsivo**: Interface moderna e adaptável
+
+## 🛠️ Tecnologias
+
+- **Backend**: Flask (Python)
+- **Banco de Dados**: Supabase (PostgreSQL)
+- **Frontend**: HTML, CSS, JavaScript
+- **Deploy**: Vercel
+- **Ícones**: Font Awesome
 
 ## 📋 Pré-requisitos
 
-- Python 3.7 ou superior
-- pip (gerenciador de pacotes Python)
+- Python 3.8+
+- Conta no Supabase
+- Conta no Vercel (para deploy)
 
-## 🛠️ Instalação
+## ⚙️ Configuração
 
-1. **Clone ou baixe o projeto**
-   ```bash
-   # Se estiver usando git
-   git clone [url-do-repositorio]
-   cd "Convite de noivado"
-   ```
+### 1. Clone o repositório
+```bash
+git clone <url-do-repositorio>
+cd convite-noivado
+```
 
-2. **Instale as dependências**
-   ```bash
-   pip install -r requirements.txt
-   ```
+### 2. Configure o Supabase
 
-3. **Execute o sistema**
-   ```bash
-   python app.py
-   ```
+1. Crie uma conta em [supabase.com](https://supabase.com)
+2. Crie um novo projeto
+3. Vá em Settings > API e copie:
+   - Project URL
+   - anon/public key
 
-4. **Acesse no navegador**
-   ```
-   http://localhost:5000
-   ```
+### 3. Configure as variáveis de ambiente
 
-## 📱 Como Usar
+Copie o arquivo `env.example` para `.env`:
+```bash
+cp env.example .env
+```
 
-### 1. Configuração Inicial
-- Acesse a **Área Administrativa** (`/admin`)
-- Use a senha: `noivado2024` (você pode alterar no arquivo `app.py`)
-- Clique em **"Configurar Evento"**
-- Preencha as informações dos noivos, data, local e descrição
-- Salve a configuração
+Edite o `.env` com suas credenciais:
+```env
+SUPABASE_URL=sua_url_do_supabase_aqui
+SUPABASE_KEY=sua_chave_anon_do_supabase_aqui
+SECRET_KEY=sua_chave_secreta_aqui
+ADMIN_PASSWORD=noivado2024
+```
 
-### 2. Compartilhamento
-- Compartilhe o link `http://localhost:5000` com seus convidados
-- Os convidados podem acessar e preencher o formulário com até 3 nomes
-- Confirmação automática após envio
+### 4. Instale as dependências
+```bash
+pip install -r requirements.txt
+```
 
-### 3. Gerenciamento
-- Na área administrativa, visualize todas as confirmações
-- Edite ou remova convidados conforme necessário
-- Exporte a lista de convidados em CSV
-- Acompanhe estatísticas em tempo real
-- Dados salvos em `convidados.json`
-- Sistema protegido por senha personalizada
+### 5. Configure o banco de dados
 
-## 🗄️ Estrutura do Banco de Dados
+Execute o SQL no Supabase SQL Editor:
 
-### Tabela: `convidados`
-- `id`: Identificador único
-- `nome`: Nome do convidado
-- `email`: E-mail (opcional)
-- `telefone`: Telefone (opcional)
-- `confirmado`: Status de confirmação
-- `data_confirmacao`: Data/hora da confirmação
-- `numero_acompanhantes`: Quantidade de acompanhantes
-- `observacoes`: Observações adicionais
-- `data_criacao`: Data de criação do registro
+```sql
+-- Tabela de convidados
+CREATE TABLE convidados (
+    id SERIAL PRIMARY KEY,
+    nomes TEXT[] NOT NULL,
+    total_pessoas INTEGER NOT NULL,
+    data_confirmacao TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
 
-### Tabela: `config_evento`
-- `id`: Identificador único
-- `nome_noivos`: Nomes dos noivos
-- `data_evento`: Data do evento
-- `hora_evento`: Horário do evento
-- `local_evento`: Local do evento
-- `descricao_evento`: Descrição adicional
-- `data_criacao`: Data de criação da configuração
+-- Políticas de segurança (RLS)
+ALTER TABLE convidados ENABLE ROW LEVEL SECURITY;
 
-## 🌐 Rotas da Aplicação
+-- Permitir inserção para todos (confirmação de presença)
+CREATE POLICY "Permitir inserção de convidados" ON convidados
+    FOR INSERT WITH CHECK (true);
 
-- `/`: Página principal com informações do evento
-- `/confirmar`: Formulário de confirmação de presença
-- `/admin`: Área administrativa
-- `/configurar`: Configuração do evento
-- `/editar_convidado/<id>`: Editar convidado específico
-- `/deletar_convidado/<id>`: Remover convidado específico
-- `/api/convidados`: API para listar convidados (JSON)
-- `/api/estatisticas`: API para estatísticas (JSON)
+-- Permitir leitura para todos (API pública)
+CREATE POLICY "Permitir leitura de convidados" ON convidados
+    FOR SELECT USING (true);
+
+-- Permitir atualização e deleção apenas para admins (será configurado depois)
+CREATE POLICY "Permitir admin" ON convidados
+    FOR ALL USING (auth.role() = 'authenticated');
+```
+
+## 🚀 Como Usar
+
+### Desenvolvimento Local
+```bash
+python api/index.py
+```
+
+### Deploy na Vercel
+
+1. Conecte seu repositório ao Vercel
+2. Configure as variáveis de ambiente no Vercel:
+   - `SUPABASE_URL`
+   - `SUPABASE_KEY`
+   - `SECRET_KEY`
+   - `ADMIN_PASSWORD`
+3. Deploy automático!
+
+## 📁 Estrutura do Projeto
+
+```
+├── api/
+│   ├── index.py          # Aplicação Flask principal
+│   ├── templates/        # Templates HTML
+│   └── static/           # Arquivos estáticos (CSS, imagens)
+├── requirements.txt      # Dependências Python
+├── vercel.json          # Configuração Vercel
+├── env.example          # Exemplo de variáveis de ambiente
+└── README.md            # Este arquivo
+```
+
+## 🔐 Segurança
+
+- Senha administrativa configurável
+- Row Level Security (RLS) no Supabase
+- Variáveis de ambiente para credenciais
+- Validação de entrada nos formulários
+
+## 📊 Dados
+
+Os dados dos convidados são armazenados no Supabase com:
+- Nomes (array de strings)
+- Total de pessoas
+- Data de confirmação
+- Timestamp de criação
+
+## 🔄 Rotas
+
+- `/` - Página principal com formulário de confirmação
+- `/admin` - Área administrativa (protegida por senha)
+- `/confirmar` - Endpoint para confirmar presença
+- `/editar_convidado/<id>` - Editar convidado
+- `/deletar_convidado/<id>` - Deletar convidado
+- `/api/convidados` - API para listar convidados
 
 ## 🎨 Personalização
 
-O sistema usa CSS customizado com:
-- Gradientes modernos
-- Animações suaves
-- Design responsivo
-- Ícones Font Awesome
-- Paleta de cores roxa/azul
+- Cores principais: `#7d8766` (verde)
+- Logo: Adicione sua logo em `api/static/images/logo-noivado.png`
+- Endereço: Configure no template `index.html`
 
-## 📊 Funcionalidades Avançadas
+## 📞 Suporte
 
-- **Exportação CSV**: Baixe a lista completa de convidados
-- **Estatísticas em Tempo Real**: Acompanhe confirmações vs pendentes
-- **Validação de Formulários**: Campos obrigatórios e validações
-- **Mensagens Flash**: Feedback visual para o usuário
-- **API REST**: Endpoints para integração externa
-
-## 🔧 Configuração de Produção
-
-Para usar em produção:
-
-1. **Altere a chave secreta** em `app.py`:
-   ```python
-   app.secret_key = 'sua_chave_secreta_muito_segura_aqui'
-   ```
-
-2. **Configure um servidor WSGI** como Gunicorn:
-   ```bash
-   pip install gunicorn
-   gunicorn -w 4 -b 0.0.0.0:5000 app:app
-   ```
-
-3. **Use um proxy reverso** como Nginx para melhor performance
-
-## 📝 Licença
-
-Este projeto é de código aberto e pode ser usado livremente.
-
-## 🤝 Contribuição
-
-Sinta-se à vontade para contribuir com melhorias, correções ou novas funcionalidades!
-
----
-
-**Desenvolvido com ❤️ para celebrar momentos especiais** 
+Para dúvidas ou problemas, abra uma issue no repositório. 

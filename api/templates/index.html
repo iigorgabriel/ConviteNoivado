@@ -3,31 +3,20 @@
 {% block title %}Início - Convite de Noivado{% endblock %}
 
 {% block content %}
+<!-- Ícone da área administrativa no canto superior direito -->
+<div style="position: fixed; top: 20px; right: 20px; z-index: 1000;">
+    <a href="{{ url_for('admin') }}" title="Área Administrativa" style="background: linear-gradient(135deg, #6b7a5a, #7d8766); color: white; border: none; padding: 12px; border-radius: 50%; text-decoration: none; display: inline-block; transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.1); width: 45px; height: 45px; text-align: center; line-height: 20px;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 10px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 5px rgba(0,0,0,0.1)'">
+        <i class="fas fa-sign-in-alt" style="font-size: 1.2rem;"></i>
+    </a>
+</div>
+
 <div class="card">
-    {% if config %}
-        <div style="text-align: center; margin-bottom: 30px;">
-            <h2 style="color: #7d8766; margin-bottom: 15px;">
-                <i class="fas fa-ring"></i> {{ config.nome_noivos }}
-            </h2>
-            <p style="font-size: 1.1rem; color: #666; margin-bottom: 10px;">
-                <i class="fas fa-calendar-alt"></i> 
-                {{ config.data_evento }} às {{ config.hora_evento }}
-            </p>
-            <p style="font-size: 1.1rem; color: #666; margin-bottom: 20px;">
-                <i class="fas fa-map-marker-alt"></i> {{ config.local_evento }}
-            </p>
-            {% if config.descricao_evento %}
-                <p style="color: #777; font-style: italic;">{{ config.descricao_evento }}</p>
-            {% endif %}
-        </div>
-    {% else %}
-        <div style="text-align: center; margin-bottom: 30px;">
-            <h2 style="color: #7d8766;">
-                <i class="fas fa-heart"></i> Bem-vindo ao nosso noivado!
-            </h2>
-            <p style="color: #666;">Configure as informações do evento para começar.</p>
-        </div>
-    {% endif %}
+    <div style="text-align: center; margin-bottom: 30px;">
+        <h2 style="color: #7d8766;">
+            <i class="fas fa-heart"></i> Bem-vindo ao nosso noivado!
+        </h2>
+        <p style="color: #666;">Igor & Júlia</p>
+    </div>
 
     <div class="card logo-container">
         <div class="logo-placeholder" style="text-align: center;">
@@ -111,12 +100,6 @@
                 }
             }
         </script>
-    </div>
-
-    <div class="nav">
-        <a href="{{ url_for('admin') }}" style="background: linear-gradient(135deg, #6b7a5a, #7d8766); color: white; border: none; padding: 10px 20px; border-radius: 25px; text-decoration: none; display: inline-block; transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 10px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 5px rgba(0,0,0,0.1)'">
-            <i class="fas fa-cog"></i> Área Administrativa
-        </a>
     </div>
 </div>
 

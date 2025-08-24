@@ -1,0 +1,11 @@
+{
+  "functions": {
+    "api/**/*.py": { "runtime": "python3.11" }
+  },
+  "rewrites": [
+    { "source": "/", "destination": "/api/index.py" },
+    { "source": "/(.*)", "destination": "/api/index.py" }
+  ],
+  "buildCommand": "",
+  "installCommand": "pip install -r requirements.txt"
+}
