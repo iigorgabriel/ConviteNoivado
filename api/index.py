@@ -25,7 +25,7 @@ def confirmar():
     try:
         # Verificar se as variáveis de ambiente estão configuradas
         if not os.getenv('SUPABASE_URL') or not os.getenv('SUPABASE_KEY'):
-            return jsonify({'success': False, 'message': 'Erro de configuração: Variáveis do Supabase não encontradas'})
+            return redirect(url_for('index') + '?error=config')
         
         # Coletar nomes do formulário
         nomes = []
@@ -37,7 +37,7 @@ def confirmar():
             i += 1
         
         if not nomes:
-            return jsonify({'success': False, 'message': 'Por favor, insira pelo menos um nome.'})
+            return redirect(url_for('index') + '?error=nome')
         
         # Inserir no Supabase
         novo_convidado = {
@@ -48,12 +48,12 @@ def confirmar():
         
         result = supabase.table('convidados').insert(novo_convidado).execute()
         
-        return jsonify({'success': True, 'message': 'Presença confirmada com sucesso!'})
+        return redirect(url_for('index') + '?success=true')
         
     except Exception as e:
         error_msg = f'Erro ao confirmar presença: {str(e)}'
         print(f"DEBUG: {error_msg}")  # Log para debug
-        return jsonify({'success': False, 'message': error_msg})
+        return redirect(url_for('index') + '?error=geral')
 
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():
