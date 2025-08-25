@@ -25,7 +25,7 @@ def confirmar():
     try:
         # Verificar se as variáveis de ambiente estão configuradas
         if not os.getenv('SUPABASE_URL') or not os.getenv('SUPABASE_KEY'):
-            return redirect(url_for('index') + '?error=config')
+            return redirect(url_for('sucesso') + '?error=config')
         
         # Coletar nomes do formulário
         nomes = []
@@ -37,7 +37,7 @@ def confirmar():
             i += 1
         
         if not nomes:
-            return redirect(url_for('index') + '?error=nome')
+            return redirect(url_for('sucesso') + '?error=nome')
         
         # Inserir no Supabase
         novo_convidado = {
@@ -48,12 +48,16 @@ def confirmar():
         
         result = supabase.table('convidados').insert(novo_convidado).execute()
         
-        return redirect(url_for('index') + '?success=true')
+        return redirect(url_for('sucesso'))
         
     except Exception as e:
         error_msg = f'Erro ao confirmar presença: {str(e)}'
         print(f"DEBUG: {error_msg}")  # Log para debug
-        return redirect(url_for('index') + '?error=geral')
+        return redirect(url_for('sucesso') + '?error=geral')
+
+@app.route('/sucesso')
+def sucesso():
+    return render_template('sucesso.html')
 
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():

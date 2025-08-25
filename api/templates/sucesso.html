@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Presença Confirmada - Convite de Noivado{% endblock %}
+
+{% block content %}
+<div class="card" style="text-align: center; max-width: 600px; margin: 50px auto;">
+    <div style="font-size: 5rem; color: #7d8766; margin-bottom: 30px;">
+        🎉
+    </div>
+    
+    <h1 style="color: #7d8766; margin-bottom: 30px; font-size: 2.5rem; font-weight: bold;">
+        Parabéns!
+    </h1>
+    
+    <p style="color: #666; margin-bottom: 40px; font-size: 1.2rem; line-height: 1.6;">
+        Você confirmou sua presença no nosso noivado!<br>
+        Estamos muito felizes em ter você conosco neste momento especial.
+    </p>
+    
+    <div style="margin-bottom: 40px;">
+        <a href="https://www.camicado.com.br/lista/convidado/igoremariajulia" target="_blank" style="background: linear-gradient(135deg, #7d8766, #8a9575); color: white; border: none; padding: 18px 35px; border-radius: 30px; text-decoration: none; display: inline-block; font-size: 1.1rem; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.1);" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.1)'">
+            <i class="fas fa-gift"></i> Ver Lista de Presentes
+        </a>
+    </div>
+    
+    <div style="margin-bottom: 30px;">
+        <a href="{{ url_for('index') }}" style="background: linear-gradient(135deg, #6b7a5a, #7d8766); color: white; border: none; padding: 15px 30px; border-radius: 25px; text-decoration: none; display: inline-block; font-size: 1rem; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 3px 10px rgba(0,0,0,0.1); margin: 0 10px;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 5px 15px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 3px 10px rgba(0,0,0,0.1)'">
+            <i class="fas fa-home"></i> Voltar ao Início
+        </a>
+    </div>
+    
+    <div style="margin-top: 40px; padding: 20px; background: #f8f9fa; border-radius: 15px;">
+        <h3 style="color: #7d8766; margin-bottom: 15px;">
+            <i class="fas fa-map-marker-alt"></i> Local do Evento
+        </h3>
+        <p style="color: #666; margin-bottom: 15px; font-size: 1.1rem;">
+            <strong>Av. Ayrton Senna, 3391<br>Condomínio Vita Praia</strong>
+        </p>
+        <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+            <a href="https://waze.com/ul?q=Av.%20Ayrton%20Senna,%203391,%20Condomínio%20Vita%20Praia" target="_blank" style="background: linear-gradient(135deg, #7d8766, #8a9575); color: white; border: none; padding: 12px 20px; border-radius: 20px; text-decoration: none; display: inline-block; font-size: 0.9rem; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                <i class="fas fa-compass"></i> Waze
+            </a>
+            <a href="https://maps.google.com/?q=Av.+Ayrton+Senna,+3391,+Condomínio+Vita+Praia" target="_blank" style="background: linear-gradient(135deg, #6b7a5a, #7d8766); color: white; border: none; padding: 12px 20px; border-radius: 20px; text-decoration: none; display: inline-block; font-size: 0.9rem; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                <i class="fas fa-map"></i> Google Maps
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
