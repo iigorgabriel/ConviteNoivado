@@ -51,7 +51,7 @@ def confirmar():
         result = supabase.table('convidados').insert(novo_convidado).execute()
         
         flash('Presença confirmada com sucesso!', 'success')
-        return redirect(url_for('index'))
+        return redirect(url_for('index') + '?success=true')
         
     except Exception as e:
         error_msg = f'Erro ao confirmar presença: {str(e)}'
