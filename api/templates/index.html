@@ -39,7 +39,7 @@
                 <h4>2. Lista de Presentes</h4>
                 <p>Confira nossa lista de presentes</p>
                 <div style="margin-top: 15px;">
-                    <a href="https://lista.camicado.com.br/igoremariajulia" target="_blank" style="margin: 5px; padding: 10px 20px; font-size: 0.95rem; border-radius: 25px; text-decoration: none; display: inline-block; transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.1); background: linear-gradient(135deg, #7d8766, #8a9575); color: white; border: none;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 10px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 5px rgba(0,0,0,0.1)'">
+                    <a href="https://www.camicado.com.br/lista/convidado/igoremariajulia" target="_blank" style="margin: 5px; padding: 10px 20px; font-size: 0.95rem; border-radius: 25px; text-decoration: none; display: inline-block; transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.1); background: linear-gradient(135deg, #7d8766, #8a9575); color: white; border: none;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 10px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 5px rgba(0,0,0,0.1)'">
                         <i class="fas fa-gift"></i> Ver Lista de Presentes
                     </a>
                 </div>
@@ -151,19 +151,23 @@
             function mostrarModalParabens() {
                 const modal = document.getElementById('modal-parabens');
                 modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden'; // Previne scroll
             }
 
             // Função para fechar o modal
             function fecharModal() {
                 const modal = document.getElementById('modal-parabens');
                 modal.style.display = 'none';
+                document.body.style.overflow = 'auto'; // Restaura scroll
             }
 
             // Verificar se há mensagem de sucesso na URL (após confirmação)
             window.onload = function() {
                 const urlParams = new URLSearchParams(window.location.search);
                 if (urlParams.get('success') === 'true') {
-                    mostrarModalParabens();
+                    setTimeout(function() {
+                        mostrarModalParabens();
+                    }, 500); // Pequeno delay para garantir carregamento
                 }
             };
 
@@ -174,12 +178,19 @@
                     fecharModal();
                 }
             }
+
+            // Fechar modal com ESC
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    fecharModal();
+                }
+            });
         </script>
 
         <!-- Modal de Parabéns -->
         <!-- Modal atualizado para Vercel - 2024 -->
-        <div id="modal-parabens" style="display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); justify-content: center; align-items: center;">
-            <div style="background: white; padding: 40px; border-radius: 20px; text-align: center; max-width: 500px; width: 90%; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+        <div id="modal-parabens" style="display: none; position: fixed; z-index: 999999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); justify-content: center; align-items: center; backdrop-filter: blur(5px);">
+            <div style="background: white; padding: 40px; border-radius: 20px; text-align: center; max-width: 500px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.4); position: relative; margin: 20px;">
                 <div style="font-size: 4rem; color: #7d8766; margin-bottom: 20px;">
                     🎉
                 </div>
@@ -191,7 +202,7 @@
                     Estamos muito felizes em ter você conosco neste momento especial.
                 </p>
                 <div style="margin-bottom: 30px;">
-                    <a href="https://lista.camicado.com.br/igoremariajulia" target="_blank" style="background: linear-gradient(135deg, #7d8766, #8a9575); color: white; border: none; padding: 15px 30px; border-radius: 25px; text-decoration: none; display: inline-block; transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.1); font-size: 1rem;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 10px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 5px rgba(0,0,0,0.1)'">
+                    <a href="https://www.camicado.com.br/lista/convidado/igoremariajulia" target="_blank" style="background: linear-gradient(135deg, #7d8766, #8a9575); color: white; border: none; padding: 15px 30px; border-radius: 25px; text-decoration: none; display: inline-block; transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.1); font-size: 1rem;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 10px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 5px rgba(0,0,0,0.1)'">
                         <i class="fas fa-gift"></i> Ver Lista de Presentes
                     </a>
                 </div>
